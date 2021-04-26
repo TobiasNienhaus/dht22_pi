@@ -176,7 +176,8 @@ fn read_raw_data(pin: u8) -> Result<RawData, ReadingError> {
 
     let mut pulse_counts: RawData = [0; DHT_PULSES * 2];
 
-    set_max_priority();
+    // TODO
+    // set_max_priority();
 
     gpio.write(Level::High);
     sleep(Duration::from_millis(500));
@@ -206,7 +207,7 @@ fn read_raw_data(pin: u8) -> Result<RawData, ReadingError> {
             pulse_counts[i] = pulse_counts[i] + 1;
 
             if pulse_counts[i] > MAX_COUNT {
-                set_default_priority();
+                // set_default_priority();
                 return Result::Err(ReadingError::Timeout);
             }
         }
@@ -215,13 +216,13 @@ fn read_raw_data(pin: u8) -> Result<RawData, ReadingError> {
             pulse_counts[i + 1] = pulse_counts[i + 1] + 1;
 
             if pulse_counts[i + 1] > MAX_COUNT {
-                set_default_priority();
+                // set_default_priority();
                 return Result::Err(ReadingError::Timeout);
             }
         }
     }
 
-    set_default_priority();
+    // set_default_priority();
 
     Ok(pulse_counts)
 }
